@@ -1,2 +1,2 @@
-# CODSOFT-INTERNSHIP
-This repository contains the project tasks completed during my one month virtual internship at Codsoft.
+# AI Study Buddy
+This is capstone project done under infosys AI empower her program.
