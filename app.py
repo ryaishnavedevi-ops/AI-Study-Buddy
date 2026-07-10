@@ -21,16 +21,32 @@ option = st.selectbox(
 ]
 )
 if st.button("Generate"):
-  if topic == "":
-    st.warning("Please enter a topic.")
-  else:
-    if option == "Explain Concept":
-      prompt = f"Explain {topic} in simple language for a beginner."
-    elif option == "Real-Life Example":
-      prompt = f"Give one simple real-life example of {topic}."
-    elif option == "Generate Quiz":
-      prompt = f"Create 5 MCQs on {topic} with answers."
+
+    if topic == "":
+        st.warning("Please enter a topic.")
+
     else:
-      prompt = topic
-  response = model.generate_content(prompt)
-  st.write(response.text)
+
+        if option == "Explain Concept":
+            prompt = f"Explain {topic} in simple language for a beginner."
+
+        elif option == "Real-Life Example":
+            prompt = f"Give one simple real-life example of {topic}."
+
+        elif option == "Generate Quiz":
+            prompt = f"Create 5 MCQs on {topic} with answers."
+
+        else:
+            prompt = topic
+
+        try:
+            with st.spinner("Generating response..."):
+                response = model.generate_content(prompt)
+
+            st.write(response.text)
+
+        except Exception as e:
+            if "429" in str(e) or "ResourceExhausted" in str(e):
+                st.warning("🚦 Gemini API is busy. Please wait about a minute and try again.")
+            else:
+                st.error(f"Error: {e}")
